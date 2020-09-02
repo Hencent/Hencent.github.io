@@ -52,6 +52,13 @@
 <h1 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h1>
 <p>好像没有讲 user 的 vector 怎么搞，好像只提到了服从一个正态分布，那么这样做的意义是什么，是否合理？</p>
 ]]></content>
+      <categories>
+        <category>KnowledgeGraph</category>
+      </categories>
+      <tags>
+        <tag>KnowledgeGraph</tag>
+        <tag>ML</tag>
+      </tags>
   </entry>
   <entry>
     <title>leetcode 486.预测赢家</title>
