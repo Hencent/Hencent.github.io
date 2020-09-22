@@ -483,4 +483,62 @@ v_{j}^{(t)}=\sigma\left(W^{(t)} f_{j}^{(t)}+y_{1}^{(t)}\right)
         <tag>algorithm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Semantic Path based Personalized Recommendation on Weighted Heterogeneous Information Networks</title>
+    <url>/2020/09/22/45893/</url>
+    <content><![CDATA[<h1 id="文章主要解决什么问题"><a href="#文章主要解决什么问题" class="headerlink" title="文章主要解决什么问题"></a>文章主要解决什么问题</h1><p>利用知识图谱做推荐系统。传统知识图谱中，path-based 方法没有考虑边上的权值，在一些场景如电影评分中，是有很大问题的。传统方法只是知道用户与它有交互，判定为用户对它有偏爱，但是实际上用户可能打了低分。</p>
+<h1 id="解决的思路是什么"><a href="#解决的思路是什么" class="headerlink" title="解决的思路是什么"></a>解决的思路是什么</h1><ul>
+<li>给知识图谱的边引入权值</li>
+<li>使用语义模块对不同元路径设定重要性权重与个性化权重<h1 id="核心的知识点有哪些"><a href="#核心的知识点有哪些" class="headerlink" title="核心的知识点有哪些"></a>核心的知识点有哪些</h1></li>
+<li>带权知识图谱</li>
+<li>个性化权重<h1 id="模型分块说明"><a href="#模型分块说明" class="headerlink" title="模型分块说明"></a>模型分块说明</h1></li>
+<li>带权知识图谱<br>元路径上有不同的属性（例如不同的打分），针对此做一个拆分，拆成原子路径。例如，假设 user 对 item 的打分的范围是 1~5，那么就用五条路径分别表示用户打1分、2分，…， 5分。这样就可以用朴素的 PathSim 来计算相似度了。具体来说：  <ol>
+<li>利用现有的基于路径的度量方法，评估基于每个原子元路径的相似性  </li>
+<li>求和加权元路径中所有原子元路径的相似性，作为原始元路径的相似度。</li>
+</ol>
+</li>
+<li><p>语义模块</p>
+<ol>
+<li><p>单路径推荐  </p>
+<script type="math/tex; mode=display">\begin{array}{l}
+Q_{u, i, r}^{(l)}=\sum_{v} S_{u, v}^{(l)} \times E_{v, i, r} \\
+E_{v, i, r}=\left\{\begin{array}{ll}
+1 & R_{v, i}=r \\
+0 & \text { others }
+\end{array}\right.
+\end{array}</script><p>其中 $Q_{u, i, r}^{(l)}$ 表示在给定路径 l 上， user u 对 item i 评分为 r 的强度。<br>这样就可以计算出预估的用户评分</p>
+<script type="math/tex; mode=display">\hat{R}_{u, i}^{(l)}=\sum_{r=1}^{N} r \times \frac{Q_{u, i, r}^{(l)}}{\sum_{k=1}^{N} Q_{u, i, k}^{(l)}}</script></li>
+<li><p>多路径推荐  </p>
+<ol>
+<li>为所有用户学习统一的权重<br>对于所有用户，我们为每个元路径分配一个统一的权重。使用 square error 求解  <script type="math/tex; mode=display">\hat{R}_{u, i}=\sum_{l=1}^{|\mathcal{P}|} \boldsymbol{w}^{(l)} \times \hat{R}_{u, i}^{(l)}</script><script type="math/tex; mode=display">\begin{aligned}
+\min _{\boldsymbol{w}} \mathcal{L}_{1}(\boldsymbol{w}) &=\frac{1}{2}\left\|Y \odot\left(R-\sum_{l=1}^{|\mathcal{P}|} \boldsymbol{w}^{(l)} \hat{R}^{(l)}\right)\right\|_{2}^{2} \\
+&+\frac{\lambda_{0}}{2}\|\boldsymbol{w}\|_{2}^{2} \\
+\text { s.t. } & \boldsymbol{w} \geq 0
+\end{aligned}</script></li>
+<li>为每个用户学习个性化的权重<br>每个用户对不同路径有自己的权重。  <script type="math/tex; mode=display">\hat{R}_{u, i}=\sum_{l=1}^{|\mathcal{P}|} W_{u}^{(l)} \times \hat{R}_{u, i}^{(l)}</script><script type="math/tex; mode=display">\begin{aligned}
+\min _{W} \mathcal{L}_{2}(W) &=\frac{1}{2}\left\|Y \odot\left(R-\sum_{l=1}^{|\mathcal{P}|} \operatorname{diag}\left(W^{(l)}\right) \hat{R}^{(l)}\right)\right\|_{2}^{2} \\
+&+\frac{\lambda_{0}}{2}\|W\|_{2}^{2} \\
+\text {s.t.} & W \geq 0
+\end{aligned}</script></li>
+<li>解决数据少的用户的稀疏/冷启动问题<br>对于冷启动 user 和 item 来说，训练样本通常不足以进行权值学习。根据相似用户权重偏好的一致性规则，一个用户的路径权重应该与其相似用户的路径权重一致。对于信息较少的用户，其路径权重可以从其相似用户的权重中获得。因此，使用一个正则化项，它迫使用户的权值与他的相似用户的权值的平均值保持一致。也就是稍加修改了 2.2 中的式子<script type="math/tex; mode=display">\sum_{l=1}^{|\mathcal{P}|}\left\|W^{(l)}-\bar{S}^{(l)} W^{(l)}\right\|_{2}^{2}</script><script type="math/tex; mode=display">\begin{aligned}
+\min _{W} \mathcal{L}_{3}(W) &=\frac{1}{2}\left\|Y \odot\left(R-\sum_{l=1}^{|\mathcal{P}|} \operatorname{diag}\left(W^{(l)}\right) \hat{R}^{(l)}\right)\right\|_{2}^{2} \\
+&+\frac{\lambda_{1}}{2} \sum_{l=1}^{|\mathcal{P}|}\left\|W^{(l)}-\bar{S}^{(l)} W^{(l)}\right\|_{2}^{2}+\frac{\lambda_{0}}{2}\|W\|_{2}^{2} \\
+\text {s.t.} & W \geq 0
+\end{aligned}</script></li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h1><p>没有定义用户相似性怎么算，我也没想出来</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>我觉得本文说的非常有道理。很多文中都提到过这样的问题，user item 有交互并不能表示 user 喜欢这个 item.  </p>
+]]></content>
+      <categories>
+        <category>KnowledgeGraph</category>
+      </categories>
+      <tags>
+        <tag>KnowledgeGraph</tag>
+        <tag>ML</tag>
+      </tags>
+  </entry>
 </search>
