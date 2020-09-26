@@ -541,4 +541,29 @@ E_{v, i, r}=\left\{\begin{array}{ll}
         <tag>ML</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Jointly Learning Explainable Rules for Recommendation with Knowledge Graph</title>
+    <url>/2020/09/26/5848/</url>
+    <content><![CDATA[<h1 id="文章主要解决什么问题"><a href="#文章主要解决什么问题" class="headerlink" title="文章主要解决什么问题"></a>文章主要解决什么问题</h1><p>作者提出推荐系统面临两个问题：  </p>
+<ul>
+<li>可解释性不足</li>
+<li>传统 path-based 方法需要手动定义 meta-path，即需要人工干预<br>本文解决了上述问题<h1 id="解决的思路是什么"><a href="#解决的思路是什么" class="headerlink" title="解决的思路是什么"></a>解决的思路是什么</h1></li>
+<li>将知识图中可解释规则的归纳与用规则引导神经推荐模型的构建相结合。</li>
+<li>该框架鼓励两个模块相互补充，以产生有效和可解释的推荐。<h1 id="核心的知识点有哪些"><a href="#核心的知识点有哪些" class="headerlink" title="核心的知识点有哪些"></a>核心的知识点有哪些</h1></li>
+<li>Multi-Task</li>
+<li>KG<h1 id="模型分块说明"><a href="#模型分块说明" class="headerlink" title="模型分块说明"></a>模型分块说明</h1></li>
+</ul>
+<ol>
+<li>规则学习模块<br>如果实体之间满足了什么关系，那么很有可能明显的蕴含着一些关系。<br>hard-selection 和 soft-selection</li>
+<li>推荐模块<br>以 item 特征向量作为附加输入，以提高推荐性能，并对推荐进行解释。引入了一个共享规则权重向量 w 表示每个规则在预测用户偏好方面的重要性，并显示了每个规则在预测项对关联方面的有效性。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>KnowledgeGraph</category>
+      </categories>
+      <tags>
+        <tag>KnowledgeGraph</tag>
+        <tag>ML</tag>
+      </tags>
+  </entry>
 </search>
