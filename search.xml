@@ -544,18 +544,30 @@ E_{v, i, r}=\left\{\begin{array}{ll}
   <entry>
     <title>Jointly Learning Explainable Rules for Recommendation with Knowledge Graph</title>
     <url>/2020/09/26/5848/</url>
-    <content><![CDATA[<h1 id="文章主要解决什么问题"><a href="#文章主要解决什么问题" class="headerlink" title="文章主要解决什么问题"></a>文章主要解决什么问题</h1><p>作者提出推荐系统面临两个问题：  </p>
+    <content><![CDATA[<h1 id="文章主要解决什么问题"><a class="markdownIt-Anchor" href="#文章主要解决什么问题"></a> 文章主要解决什么问题</h1>
+<p>作者提出推荐系统面临两个问题：</p>
 <ul>
 <li>可解释性不足</li>
-<li>传统 path-based 方法需要手动定义 meta-path，即需要人工干预<br>本文解决了上述问题<h1 id="解决的思路是什么"><a href="#解决的思路是什么" class="headerlink" title="解决的思路是什么"></a>解决的思路是什么</h1></li>
-<li>将知识图中可解释规则的归纳与用规则引导神经推荐模型的构建相结合。</li>
-<li>该框架鼓励两个模块相互补充，以产生有效和可解释的推荐。<h1 id="核心的知识点有哪些"><a href="#核心的知识点有哪些" class="headerlink" title="核心的知识点有哪些"></a>核心的知识点有哪些</h1></li>
-<li>Multi-Task</li>
-<li>KG<h1 id="模型分块说明"><a href="#模型分块说明" class="headerlink" title="模型分块说明"></a>模型分块说明</h1></li>
+<li>传统 path-based 方法需要手动定义 meta-path，即需要人工干预<br>
+本文解决了上述问题</li>
 </ul>
+<h1 id="解决的思路是什么"><a class="markdownIt-Anchor" href="#解决的思路是什么"></a> 解决的思路是什么</h1>
+<ul>
+<li>将知识图中可解释规则的归纳与用规则引导神经推荐模型的构建相结合。</li>
+<li>该框架鼓励两个模块相互补充，以产生有效和可解释的推荐。</li>
+</ul>
+<h1 id="核心的知识点有哪些"><a class="markdownIt-Anchor" href="#核心的知识点有哪些"></a> 核心的知识点有哪些</h1>
+<ul>
+<li>Multi-Task</li>
+<li>KG</li>
+</ul>
+<h1 id="模型分块说明"><a class="markdownIt-Anchor" href="#模型分块说明"></a> 模型分块说明</h1>
 <ol>
-<li>规则学习模块<br>如果实体之间满足了什么关系，那么很有可能明显的蕴含着一些关系。<br>hard-selection 和 soft-selection</li>
-<li>推荐模块<br>以 item 特征向量作为附加输入，以提高推荐性能，并对推荐进行解释。引入了一个共享规则权重向量 w 表示每个规则在预测用户偏好方面的重要性，并显示了每个规则在预测项对关联方面的有效性。</li>
+<li>规则学习模块<br>
+如果实体之间满足了什么关系，那么很有可能明显的蕴含着一些关系。<br>
+hard-selection 和 soft-selection</li>
+<li>推荐模块<br>
+以 item 特征向量作为附加输入，以提高推荐性能，并对推荐进行解释。引入了一个共享规则权重向量 w 表示每个规则在预测用户偏好方面的重要性，并显示了每个规则在预测项对关联方面的有效性。</li>
 </ol>
 ]]></content>
       <categories>
@@ -564,6 +576,48 @@ E_{v, i, r}=\left\{\begin{array}{ll}
       <tags>
         <tag>KnowledgeGraph</tag>
         <tag>ML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Exploring the Urban Region-of-Interest through the Analysis of Online Map Search Queries</title>
+    <url>/2020/10/04/54545/</url>
+    <content><![CDATA[<h1 id="文章主要解决什么问题"><a class="markdownIt-Anchor" href="#文章主要解决什么问题"></a> 文章主要解决什么问题</h1>
+<p>识别 Region of Interest 并分析所设计的各类 topic。<br>
+ROI 与 POI 不同，他包含了多种 POI ，有多种 function / categories。往大了做，可以以一个商圈的粗粒度来使用，往小了做，可以看成是融合了几种类型的综合店铺。</p>
+<h1 id="解决的思路是什么"><a class="markdownIt-Anchor" href="#解决的思路是什么"></a> 解决的思路是什么</h1>
+<ul>
+<li>利用 density-based 聚类方法来识别 ROI</li>
+<li>利用 topic model 分析查询历史，挖掘更多 ROI 的信息</li>
+</ul>
+<h1 id="核心的知识点有哪些"><a class="markdownIt-Anchor" href="#核心的知识点有哪些"></a> 核心的知识点有哪些</h1>
+<ul>
+<li>clustering</li>
+<li>topic model</li>
+</ul>
+<h1 id="模型分块说明"><a class="markdownIt-Anchor" href="#模型分块说明"></a> 模型分块说明</h1>
+<ul>
+<li>clustering<br>
+将城区划分为细粒度的网格，利用 PageRank 分析各个网格的受欢迎程度。再利用 Heat Value 等指标对网格进行聚类融合，得到不同的 ROI。</li>
+<li>topic model<br>
+NLP 相关，此处跳过。</li>
+</ul>
+<h1 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h1>
+<p>这篇论文的数据分析部分很值得一看。</p>
+<ul>
+<li>topic model<br>
+以北京市为例，通过 topic 的空间分布(user 被 topic 所属地点吸引)、topic 所包含的 POI 类别、topic 是时间分布这三个指标，可以分析出一些场景。如：去工作、家庭晚宴、周末购物等场景，可以为城市商业规划提供指导。</li>
+<li>Topic-Aware Visitor Inference for ROIs<br>
+识别 topic 相关的 ROI 访问者来源。例如国贸的访客有好几种 topic 组成，每种 topic 对应的访客的到访目的都不一样。<br>
+<img src="/2020/10/04/54545/img1.png" alt="img1"><br>
+也可以和地域分析结合在一起。餐饮购物相关的 topic 从北京东部吸引的客流较少，因为北京东部也有许多购物中心。同时，对于海淀区的游客来说，Topic 7 没有 Topic 15那么有吸引力，因为那里的人更喜欢五道口的餐馆。</li>
+</ul>
+<p>这种不同的 topic 吸引了不同的用户、不同 topic 吸引用户的地理范围不同，和我们之前讨论的思路是非常契合的。我认为完全有理由将这种思路用在有多种商业类别的单一店铺上。</p>
+]]></content>
+      <categories>
+        <category>UrbanComputing</category>
+      </categories>
+      <tags>
+        <tag>UrbanComputing</tag>
       </tags>
   </entry>
 </search>
