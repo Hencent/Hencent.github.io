@@ -712,9 +712,8 @@ embedding 的原则是：具有相似层次类型的 / 语义相似的 entity �
   <entry>
     <title>leetcode-416-分割等和子集</title>
     <url>/2020/10/11/23796/</url>
-    <content><![CDATA[<p>首先，这种挑选是一个 NP 完全问题，不应期望该问题有多项式时间复杂度的解法。<br>
-必须尝试非多项式时间复杂度的算法，例如时间复杂度与元素大小相关的动态规划。</p>
-<p>这可以看成是一个需要装满的背包问题。在考虑前 i 个物品的情况下，能不能装满 j。</p>
+    <content><![CDATA[<p>首先，这种挑选是一个 NP 完全问题，不应期望该问题有多项式时间复杂度的解法。<br>必须尝试非多项式时间复杂度的算法，例如时间复杂度与元素大小相关的动态规划。  </p>
+<p>这可以看成是一个需要装满的背包问题。在考虑前 i 个物品的情况下，能不能装满 j。  </p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">205</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxv = <span class="number">10005</span>;</span><br><span class="line"><span class="keyword">bool</span> dp[maxn][maxv];</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canPartition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.<span class="built_in">size</span>() &lt; <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> val : nums) &#123;</span><br><span class="line">            sum += val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sum &amp; <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> target = sum / <span class="number">2</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">memset</span>(dp, <span class="literal">false</span>, <span class="keyword">sizeof</span>(dp));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">        dp[<span class="number">0</span>][nums[<span class="number">0</span>]] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; maxv; ++j) &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j];</span><br><span class="line">                <span class="keyword">if</span> (j - nums[i] &gt;= <span class="number">0</span> &amp;&amp; dp[i<span class="number">-1</span>][j-nums[i]]) &#123;</span><br><span class="line">                	dp[i][j] = <span class="literal">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[i][target]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>leetcode</category>
@@ -722,6 +721,56 @@ embedding 的原则是：具有相似层次类型的 / 语义相似的 entity �
       <tags>
         <tag>algorithm</tag>
         <tag>dp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Efficient similar region search with deep metric learning</title>
+    <url>/2020/10/17/20340/</url>
+    <content><![CDATA[<h1 id="文章主要解决什么问题"><a href="#文章主要解决什么问题" class="headerlink" title="文章主要解决什么问题"></a>文章主要解决什么问题</h1><p>在区域搜索中，存在两个问题：</p>
+<ol>
+<li>相似度衡量需要更合理的方法</li>
+<li>搜索的时间复杂度极高</li>
+</ol>
+<h1 id="解决的思路是什么"><a href="#解决的思路是什么" class="headerlink" title="解决的思路是什么"></a>解决的思路是什么</h1><ol>
+<li>针对相似度衡量问题，定义了一种可以既可以衡量区域内部属性，又可以衡量区域内 item 的相对位置。</li>
+<li>针对搜索时间复杂度较高的问题，使用了一种特征预处理及分支限界法来解决。</li>
+</ol>
+<h1 id="核心的知识点有哪些"><a href="#核心的知识点有哪些" class="headerlink" title="核心的知识点有哪些"></a>核心的知识点有哪些</h1><ol>
+<li>三元 CNN 网络 -&gt; 用于比较排名</li>
+<li>基于分支限界思想的 Efficient subwindow search 的搜索算法<h1 id="模型分块说明"><a href="#模型分块说明" class="headerlink" title="模型分块说明"></a>模型分块说明</h1></li>
+<li>排名学习模型（用于衡量相对相似性）<ol>
+<li>三元组网络<br>  三元组 CNN 网络在图像识别领域用的比较多，应用于图像的排序度量。像正常的 CNN 一样使用各种 kernal 来捕获局部特征。CNN 的最后一层输出的特征（不是全连接层之后得到的一个标量）内容被记为 Net(*)。在解决排名问题时这样训练：任意挑选一个查询样本 x<sub>q</sub> ，找出一个与其类别相同的正样本 x<sub>+</sub> 以及一个与其类别不同的负样本 x<sub>-</sub>。<br>  那么正负样本与查询样本之间的距离即为<script type="math/tex; mode=display">d_{+}=\left\|\operatorname{Net}\left(x_{q}\right)-\operatorname{Net}\left(x_{+}\right)\right\|_{2} \text { and } d_{-}=\left\|\operatorname{Net}\left(x_{q}\right)-\operatorname{Net}\left(x_{-}\right)\right\|_{2}</script>  显然，如果我们想要这个模型能够正确排名，就需要 d<sub>+</sub> 尽可能小，d<sub>-</sub> 尽可能大。所以就有了 loss function 为：<script type="math/tex; mode=display">\mathcal{L}=\sum_{\left(x_{q}, x_{+}, x_{-}\right)} \max \left\{0, d_{+}-d_{-}+\delta\right\}+\lambda\|\operatorname{Net}(\cdot)\|_{2}</script></li>
+<li>本论文中的使用方法<br>  对于本文的区域问题，首先将区域划分成一个个小格子（类比像素），区域特征 $R \in \mathbb{R}^{w \times h \times d}$ 经过 CNN Net 之后提取到的信息为 $X \in \mathbb{R}^{w^{<em>} \times h^{</em>} \times K}$，然后再使用一个聚合函数 g(*) （此处为 max-pooling）获取这个区域信息的一维表示 $\mathbf{v}=g(X), \mathbf{v} \in \mathbb{R}^{1 \times K}$。所以本文中对应的 d<sub>+</sub> 和 d<sub>-</sub> 为：$d_{+}=\left|\mathbf{v}_{q}-\mathbf{v}_{+}\right|_{2}$ and $d_{-}=\left|\mathbf{v}_{q}-\mathbf{v}_{-}\right|_{2}$。这样就可以进行 CNN Net 的训练了<br>  训练完之后，区域相似度可以表示为：$\operatorname{sim}\left(R_{1}, R_{2}\right)=\frac{1}{1+\left|\mathbf{v}_{1}-\mathbf{v}_{2}\right|_{2}}$</li>
+<li>训练 robust 的三元组网络<br>由于没有标好标记的区域相似性数据，文中提出一种自监督的学习策略，通过学习自相似性来使模型具备 robust，无需再获取标签。<br>所谓的 robust 可以理解为，一个原始区域和一个由前者经少量噪声和移动而产生的区域应被视为是相似的。<br>按照这个思路，随机挑选一个区域作为查询区域，加上少量的噪声和移动作为正样本；随机选取其他区域作为负样本、原查询区域加上过多的噪声和移动作为难例负样本。<br>这样，模型学到的特征对小的噪声和移动也就具有了 robust。<ol>
+<li>基于比率的训练损失<br>不同区域中的目标数差别很大，这可能会导致一些训练数据组的损失值很大，盖过了其它训练数据的影响。所以修改 loss function 为：<script type="math/tex; mode=display">\mathcal{L}=\sum_{\left(R_{q}, R_{+}, R_{-}\right)} \max \left\{0, \frac{d_{+}}{d_{+}+d_{-}}-\delta\right\}+\lambda\|\operatorname{Net}(\cdot)\|_{2}</script></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>区域搜寻算法（解决搜索时间极长的问题）</p>
+<ol>
+<li>通过共享 CNN 计算结果转化问题<br>  计算相似性的时候，每选一个候选区域，就要通过 CNN 来计算它的特征。如果要查询很多次，特别是有部分区域重叠的时候，就会有许多重复计算。那干脆直接预处理最大的区域，然后直接找特征相似的区域。找到特征相似区域之后，再反向找出原区域即可。<br>  <img src="/2020/10/17/20340/1.png" alt></li>
+<li><p>分支限界法求精准结果  </p>
+<ol>
+<li>基本概念与设定<br><img src="/2020/10/17/20340/2.png" alt><br>候选特征区域的位置可以用一个参数化元组表示：$(t^<em>,b^</em>,l^<em>,r^</em>)$ ，其中$1 \leq l^<em> \leq r^</em> \leq H^<em>$，且$1 \leq b^</em> \leq t^<em> \leq W^</em>$。<br>搜索空间：一个特征区域位置的集合${S}={\bar t} \times {\bar b} \times {\bar l} \times {\bar r}$，其中${\bar t}=[t_{min}^{<em>},t_{max}^{</em>}],{\bar b}=[b_{min}^{<em>},b_{max}^{</em>}],{\bar l}=[l_{min}^{<em>},l_{max}^{</em>}],{\bar r}=[r_{min}^{<em>},r_{max}^{</em>}]$，使得$\forall (t^<em>,b^</em>,l^<em>,r^</em>) \in {S}$，满足$t^<em> \in {\bar t},b^</em> \in {\bar b},l^<em> \in {\bar l},r^</em> \in {\bar r}$.<br>搜索空间的概念如上图中灰色区域所示。候选区域也就是 $X_{\cap} \subset X_{c} \subset X_{\cup}, \forall X_{c} \in \mathcal{S}$<br>本方法中，我们定义给定查询 X<sub>q</sub> 时，一个候选空间 S 距离的下界，也就是说：$\hat{f}\left(\mathcal{S} \mid \mathcal{X}_{q}\right) \leq\left|g\left(\mathcal{X}_{q}\right)-g\left(\mathcal{X}_{c}\right)\right|_{2}, \forall \mathcal{X}_{c} \in \mathcal{S}$。直观的来看，$\hat{f}\left(\mathcal{S} \mid \mathcal{X}_{q}\right)$越小，那么 $\exists {X}_c \in {S}$ 是 X<sub>q</sub> 的一个 top-N 区域的机会越大。  <ol>
+<li>分支定界搜索<br>本题中的 g 是 max-pooling 函数，它是单调递增的（如果区域A包含区域B，那么g(A) &gt;= g(B)）。所以<script type="math/tex; mode=display">g\left(\mathcal{X}_{\cap}\right) \leq g\left(\mathcal{X}_{c}\right) \leq g\left(\mathcal{X}_{\mathrm{U}}\right), i . e_{.}, \mathbf{v}_{\cap}[k] \leq \mathbf{v}_{c}[k] \leq \mathbf{v}_{\mathrm{U}}[k], \forall k \in[1, K]</script>而 $\left|g\left(\mathcal{X}_{q}\right)-g\left(\mathcal{X}_{c}\right)\right|_{2}$ 可以用 $\sqrt{\sum_{k \in[1, K]}\left(\mathbf{v}_{q}[k]-\mathbf{v}_{c}[k]\right)^{2}}$ 表示，那么根据上述单调的结论，可以得到如下两个条件：<script type="math/tex; mode=display">(i) \quad\left(\mathbf{v}_{q}[k]-\mathbf{v}_{c}[k]\right)^{2} \geq\left(\mathbf{v}_{q}[k]-\mathbf{v}_{\cap}[k]\right)^{2}, \quad \text { if } \mathbf{v}_{\cap}[k] \geq \mathbf{v}_{q}[k]</script><script type="math/tex; mode=display">(i i) \quad\left(\mathbf{v}_{q}[k]-\mathbf{v}_{c}[k]\right)^{2} \geq\left(\mathbf{v}_{q}[k]-\mathbf{v}_{U}[k]\right)^{2}, \quad \text { if } \mathbf{v}_{\cup}[k] \leq \mathbf{v}_{q}[k]</script>所以我们的下界就可以表示为 $\hat{f}\left(\mathcal{S} \mid \mathcal{X}_{q}\right)=\sqrt{\sum_{k_{1}}\left(\mathbf{v}_{q}\left[k_{1}\right]-\mathbf{v}_{\cap}\left[k_{1}\right]\right)^{2}+\sum_{k_{2}}\left(\mathbf{v}_{q}\left[k_{2}\right]-\mathbf{v}_{\cup}\left[k_{2}\right]\right)^{2}}$。<br>这样就可以进行分支限界的搜索了</li>
+<li>搜索过程<br><img src="/2020/10/17/20340/3.png" alt><br>这个搜索过程借鉴了一个叫 Efficient subwindow search 的目标定位算法，拆分的过程如下图所示。通过不停的拆分，每次选择可能性最大的区域进一步搜索。每次拆分，都会排除掉比较多的区域，能够快速定位到答案区域。<br>我自己画图试了试各种拆分，发现即使每次拆分的都不是最合适的方向，但是并不会漏掉答案存在的可能性。<strong>尤其需要注意的是，它每次拆分并不是把图一剖为二，而是按照下图的方式拆分</strong> 务必看懂下图才能知道为什么不会漏解。<br><img src="/2020/10/17/20340/4.png" alt> </li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>求模糊结果<br>  限制队列 Q 的大小，当长度过长时，丢掉队列尾。可以在只损失一点准确率的情况下提升效率。</p>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>UrbanComputing</category>
+      </categories>
+      <tags>
+        <tag>UrbanComputing</tag>
+        <tag>Search</tag>
       </tags>
   </entry>
 </search>
