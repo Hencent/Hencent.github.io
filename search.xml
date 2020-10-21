@@ -856,4 +856,24 @@ M1001 80H400000v40H1013z"/></svg></span></span></span><span class="vlist-s">​<
         <tag>UrbanComputing</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Spatial Object Recommendation with Hints: When Spatial Granularity Matters</title>
+    <url>/2020/10/20/5149/</url>
+    <content><![CDATA[<h1 id="文章主要解决什么问题"><a href="#文章主要解决什么问题" class="headerlink" title="文章主要解决什么问题"></a>文章主要解决什么问题</h1><p>灵活的多级/多层 POI 推荐。<br>可解释的 POI 推荐。</p>
+<h1 id="解决的思路是什么"><a href="#解决的思路是什么" class="headerlink" title="解决的思路是什么"></a>解决的思路是什么</h1><p>将 POI 之间的相互包含关系预处理为一棵 POI 树。<br>为 POI 的每层都安排一个任务，利用 user-POI 交互与 POI 树结构，给每层做 top-k 推荐。<br>根据各种信息在最终得分中的贡献做推荐(用户层面、POI层面、交互层面)</p>
+<h1 id="核心的知识点有哪些"><a href="#核心的知识点有哪些" class="headerlink" title="核心的知识点有哪些"></a>核心的知识点有哪些</h1><ul>
+<li>multi-task</li>
+<li>feature engineering</li>
+</ul>
+<h1 id="模型分块说明"><a href="#模型分块说明" class="headerlink" title="模型分块说明"></a>模型分块说明</h1><ul>
+<li>multi-task  </li>
+<li>subtaskA Atrribute-based Representing Learning<br>  这一部分是利用 user 和 POI 自有的信息做特征提取。一方面是完全利用自身的信息构造直接特征矩阵，如 POI 的类型，user 的年龄等等。另一方面，利用了 POI 历史用户信息来表示 user 的一些特征，即反序特征矩阵；利用 user 表示 POI 亦然。【这里指的是统计层面的数据，没有利用到具体的 user POI 交互】<br>  最终利用矩阵分解得到 attributed-based 的特征向量。</li>
+<li>subtaskB Interaction-based Representing Learning<br>  利用 co-search co-visit distance 这三个关系得到空间联系信息，乘上 attributed 的 user 矩阵，得到基于空间的用户 rating-matrix。<br>  利用 POI 之间每一层的关系来丰富 POI 表示。即利用下层来丰富上层的表示。利用 POI 的这个带有层次信息的特征矩阵，乘上 user 矩阵，得到基于特征的用户 rating-matrix。<br>  组合两个 ratting-matrix 得到最终的矩阵，使用 BPR 训练各参数。</li>
+</ul>
+<h1 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h1><ul>
+<li>POI tree 是预定义的。</li>
+<li>只有上层利用下层的结果，所以最下层的效果可能不好。</li>
+</ul>
+]]></content>
+  </entry>
 </search>
